@@ -1,0 +1,65 @@
+﻿@model WebApplication2.Models.Form
+@using WebApplication2.Services
+@using WebApplication2.Models
+
+@{
+    /**/
+
+    ViewBag.Title = "Index";
+    //IHtmlBuilder htmlBuilder = new HtmlBuilder();
+    //string htmlForm = htmlBuilder.BuildHtmlString(Model);
+    //IHtmlString str = new HtmlString(htmlForm);
+
+}
+
+@{
+    @helper BuildHtml(Form form)
+    {
+        /*pastato visa forma pagal klausimus*/
+
+        using (Html.BeginForm("FormInputPost", "Home", new { formId = Model.formId }))
+        {
+            //string[] answerArray = new string[form.questions.Count];
+            foreach (Question q in form.questions)
+            {
+                switch (q.qType)
+                {
+                    case Question.QuestionType.Text:
+                        @BuildText(q)
+                        break;
+                    case Question.QuestionType.ShortText:
+                        @BuildShortText(q)
+                        break;
+                    default:
+                        break;
+                }
+            }
+            <div class="row">
+                <input type="submit" value="Pateikti" />
+            </div>
+        }
+    }
+
+    @helper BuildShortText(Question q)
+    {
+        <div class="row">
+            <h4>@($"{(q.id + 1).ToString()}. {q.question}")</h4>
+        </div>
+        <div class="row">
+            @Html.TextBox($"{q.id}", q.qAnswer, new { @class = "form-control" })
+        </div>
+    }
+    @helper BuildText(Question q)
+    {
+        <div class="row">
+            <h4>@($"{(q.id + 1).ToString()}. {q.question}")</h4>
+        </div>
+        <div class="row">
+            @Html.TextArea($"{q.id}", q.qAnswer, new { @class = "form-control", @cols = "300", @rows = "8", @style = "width:100%;" })
+        </div>
+    }
+}
+        <div class="container">
+            @Html.ActionLink("Dashboard", "Dashboard", "Home")
+            @BuildHtml(Model)
+        </div>

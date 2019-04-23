@@ -1,0 +1,15 @@
+﻿@model Dictionary<string, int>
+@{
+    ViewBag.Title = "Dashboard";
+
+}
+
+<h2>Dashboard</h2>
+@Html.ActionLink("Upload New", "Upload", "Home")
+@foreach (string key in Model.Keys)
+{
+    <h6>
+        @Html.ActionLink(key, "FormView", "Home", new { formId = Model[key] }, null)
+    </h6>
+}
+

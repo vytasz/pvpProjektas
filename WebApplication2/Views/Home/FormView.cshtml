@@ -1,0 +1,16 @@
+﻿@model WebApplication2.Models.Form
+@using WebApplication2.Services
+@using WebApplication2.Models
+
+@{
+    ViewBag.Title = "FormView";
+}
+
+<h2>@Model.tablename</h2>
+@Html.ActionLink("Edit", "FormInput", "Home", new { formId = Model.formId }, null)
+@foreach (Question q in Model.questions)
+{
+    <h3>@q.question</h3>
+    <p>@q.qAnswer</p>
+}
+
